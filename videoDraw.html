@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Draw</title>
+  </head>
+  <body>
+    <video id="v" controls loop src="mov_bbb.mp4"></video>
+    <canvas id="c"></canvas>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const v = document.querySelector("#v");
+        const canvas = /** @type {HTMLCanvasElement} */ (document.querySelector(
+          "#c"
+        ));
+        const ctx = canvas.getContext("2d");
+
+        function handleMouseClick(evt) {
+          x = evt.clientX - canvas.offsetLeft;
+          y = evt.clientY - canvas.offsetTop;
+          console.log("x,y:" + x + "," + y);
+        }
+        canvas.addEventListener("click", handleMouseClick, false);
+        1;
+
+        v.addEventListener("loadedmetadata", function () {
+          canvas.width = this.videoWidth;
+          canvas.height = this.videoHeight;
+        });
+
+        const draw = () => {
+          canvas.getContext("2d").drawImage(v, 0, 0);
+          requestAnimationFrame(draw);
+        };
+
+        v.addEventListener("play", function () {
+          if (v.paused || v.ended) return;
+          draw();
+        });
+      });
+    </script>
+  </body>
+</html>

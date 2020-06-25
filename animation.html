@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Animation Canvas</title>
+  </head>
+  <body>
+    <canvas id="c">
+    <script>
+      var canvas = /** @type {HTMLCanvasElement} */ (document.querySelector("#c"));
+      var ctx = canvas.getContext("2d");
+      animate();
+      
+      function animate() {
+        requestAnimationFrame(animate);
+        draw();
+      }
+
+      function draw() {
+        var time = new Date().getTime() * 0.002;
+        var x = Math.sin(time) * 96 + 38;
+        var y = Math.cos(time * 0.9) * 96 + 38;
+
+        ctx.fillStyle = "rgb(245,245,245)";
+        ctx.fillRect(0, 0, 255, 255);
+        ctx.fillStyle = "rgb(255,0,0)";
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+      }
+    </script>
+  </body>
+</html>
